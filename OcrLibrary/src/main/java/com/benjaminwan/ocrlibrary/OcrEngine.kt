@@ -13,7 +13,7 @@ class OcrEngine(context: Context) {
         System.loadLibrary("BaiPiaoOcr")
         val ret = init(
             context.assets, numThread,
-            "ch_ppocr_mobile_v2.0_det_infer.onnx",
+            "ch_PP-OCRv2_det_infer.onnx",
             "ch_ppocr_mobile_v2.0_cls_infer.onnx",
             "ch_ppocr_mobile_v2.0_rec_infer.onnx",
             "ppocr_keys_v1.txt"

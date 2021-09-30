@@ -2,7 +2,7 @@
 #include "BitmapUtils.h"
 #include "OcrLite.h"
 #include "OcrUtils.h"
-#include "omp.h"
+//#include "omp.h"
 
 static OcrLite *ocrLite;
 
@@ -25,7 +25,7 @@ Java_com_benjaminwan_ocrlibrary_OcrEngine_init(JNIEnv *env, jobject thiz, jobjec
     std::string modelRecName = jstringTostring(env, recName);
     std::string modelKeysName = jstringTostring(env, keysName);
     ocrLite->init(env, assetManager, numThread, modelDetName, modelClsName, modelRecName, modelKeysName);
-    omp_set_num_threads(numThread);
+    //omp_set_num_threads(numThread);
     //ocrLite->initLogger(false);
     return JNI_TRUE;
 }

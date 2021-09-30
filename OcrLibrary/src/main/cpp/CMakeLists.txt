@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-option(OCR_OPENMP "Enable OpenMP" ON)
-set(OCR_OPENMP ON)
-
 #ONNX
 set(ONNX_DIR "${CMAKE_SOURCE_DIR}/../onnx")
 find_package(ONNX REQUIRED)
@@ -45,11 +42,7 @@ include_directories(include)
 file(GLOB OCR_SRC src/*.cpp)
 set(OCR_COMPILE_CODE ${OCR_SRC})
 
-add_library(BaiPiaoOcr SHARED ${OCR_COMPILE_CODE})
-
-if (OCR_OPENMP)
-    target_compile_definitions(BaiPiaoOcr PRIVATE __OPENMP__)
-endif ()
+add_library(RapidOcr SHARED ${OCR_COMPILE_CODE})
 
 find_library( # Sets the name of the path variable.
         log-lib
@@ -61,7 +54,7 @@ find_library(
 )
 
 target_link_libraries(
-        BaiPiaoOcr
+        RapidOcr
         ${ONNX_LIBS}
         ${OpenCV_LIBS}
         android

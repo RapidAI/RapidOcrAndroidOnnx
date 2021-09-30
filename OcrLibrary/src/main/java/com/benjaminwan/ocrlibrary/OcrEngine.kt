@@ -10,7 +10,7 @@ class OcrEngine(context: Context) {
     }
 
     init {
-        System.loadLibrary("BaiPiaoOcr")
+        System.loadLibrary("RapidOcr")
         val ret = init(
             context.assets, numThread,
             "ch_PP-OCRv2_det_infer.onnx",

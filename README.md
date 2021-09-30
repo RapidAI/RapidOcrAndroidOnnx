@@ -40,8 +40,6 @@
 ## APK下载
 
 * 编译好的demo apk，可以在release中下载，或者Q群共享内下载，文件名例：OcrLiteAndroidOnnx-版本号-release.apk
-* 或者[Gitee下载](https://gitee.com/benjaminwan/ocr-lite-android-onnx/releases)
-* 或者[Github下载](https://github.com/benjaminwan/OcrLiteAndroidOnnx/releases)
 
 ## 简介
 

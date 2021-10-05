@@ -92,14 +92,14 @@ dependencies {
     kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 
     // CameraX core library
-    def camerax_version = '1.0.1'
+    def camerax_version = '1.0.2'
     implementation "androidx.camera:camera-core:$camerax_version"
     // CameraX Camera2 extensions
     implementation "androidx.camera:camera-camera2:$camerax_version"
     // CameraX Lifecycle library
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     // CameraX View class
-    implementation 'androidx.camera:camera-view:1.0.0-alpha28'
+    implementation 'androidx.camera:camera-view:1.0.0-alpha29'
 
     //cameraMask 相机遮罩
     implementation 'jsc.kit.cameramask:camera-mask:0.3.0'

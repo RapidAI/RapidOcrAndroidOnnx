@@ -191,7 +191,7 @@ class ImeiActivity : AppCompatActivity(), View.OnClickListener {
                 OcrFailed
             }
             emit(result)
-        }.flowOn(Dispatchers.IO)
+        }
             .flowOn(Dispatchers.IO)
             .onEach {
                 when (it) {

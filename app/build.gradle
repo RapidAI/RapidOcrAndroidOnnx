@@ -79,10 +79,10 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     //lifecycle
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-beta01'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-rc01'
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation project(":OcrLibrary")
 
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
@@ -99,7 +99,7 @@ dependencies {
     // CameraX Lifecycle library
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     // CameraX View class
-    implementation 'androidx.camera:camera-view:1.0.0-alpha29'
+    implementation 'androidx.camera:camera-view:1.0.0-alpha30'
 
     //cameraMask 相机遮罩
     implementation 'jsc.kit.cameramask:camera-mask:0.3.0'

@@ -74,6 +74,14 @@ jobs:
           name: outputs
           path: |
             app/build/outputs/apk/release/*.apk
+            OcrLibrary/build/outputs/aar/*-release.aar
+
+      # 获取 aar路径(需要定制)
+      - name: Get aar path
+        id: aar-path
+        run: |
+          path=$(find OcrLibrary/build/outputs/aar -name '*release.aar' -type f | head -1)
+          echo "::set-output name=path::$path"
 
       # 获取demo apk路径
       - name: Get apk path
@@ -113,6 +121,7 @@ jobs:
       - name: Show info
         if: always()
         run: |
+          echo '${{ steps.aar-path.outputs.path }}'
           echo '${{ steps.apk-path.outputs.path }}'
           echo '${{ steps.apk-info.outputs.result }}' # get apk info success or failure
           echo '${{ steps.time.outputs.time }}'
@@ -163,5 +172,6 @@ jobs:
           draft: true
           files: |
             ${{ steps.apk-path.outputs.path }}
+            ${{ steps.aar-path.outputs.path }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

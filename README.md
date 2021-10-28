@@ -58,7 +58,7 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 
 ## 更新说明
 
-#### 2021-09-30 update
+#### 2021-09-30 update 1.1.0
 
 * opencv 3.4.15(特别说明：4.5.3也可以支持，如果换成cv4，minSdkVersion必须改为24)
 * det模型更换为效果更好的ch_PP-OCRv2_det_infer
@@ -66,6 +66,11 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 * 升级gradle: 7.0.2
 * 升级各dependencies
 * 使用kotlin coroutines代替rxjava
+
+#### 2021-10-28 update 1.1.1
+
+* 编辑build.gradle，把版本定义放到root build.gradle
+* 编辑github workflow config，上传aar文件到release
 
 ## 编译说明
 

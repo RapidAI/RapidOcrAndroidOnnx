@@ -57,11 +57,6 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 6. onnxruntime动态库 1.6.0(因为当前模型不支持高版本)
 
 ## 更新说明
-#### 2022-03-03 update 1.1.1
-
-* 升级gradle
-* 升级各依赖库
-
 #### 2021-09-30 update 1.1.0
 
 * opencv 3.4.15(特别说明：4.5.3也可以支持，如果换成cv4，minSdkVersion必须改为24)
@@ -75,6 +70,11 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 
 * 编辑build.gradle，把版本定义放到root build.gradle
 * 编辑github workflow config，上传aar文件到release
+
+#### 2022-03-03 update 1.1.2
+
+* 升级gradle
+* 升级各依赖库
 
 ## 编译说明
 

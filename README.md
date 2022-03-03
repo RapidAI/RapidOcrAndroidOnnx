@@ -57,6 +57,10 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 6. onnxruntime动态库 1.6.0(因为当前模型不支持高版本)
 
 ## 更新说明
+#### 2022-03-03 update 1.1.1
+
+* 升级gradle
+* 升级各依赖库
 
 #### 2021-09-30 update 1.1.0
 
@@ -74,7 +78,7 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 
 ## 编译说明
 
-1. AndroidStudio 2020.3.1或以上；
+1. AndroidStudio 2021.1.1或以上；
 2. NDK下载，在SDK Tools中下载，版本选最新版；
 3. cmake 3.4.1或以上，最好是3.18.1，在SDK Tools中下载；
 4. [模型下载](https://github.com/RapidAI/RapidOcrAndroidOnnx/releases/download/1.0.1/RapidOcrOnnxModel-20210930.7z)

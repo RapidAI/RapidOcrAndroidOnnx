@@ -6,28 +6,12 @@ buildscript {
     ext.target_sdk_version = 31
     ext.project_version_code = 5
     ext.project_version_name = "1.1.2"
-    repositories {
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
 }
 
-allprojects {
-    repositories {
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-        google()
-        jcenter()
-    }
+plugins {
+    id 'com.android.application' version '7.2.0' apply false
+    id 'com.android.library' version '7.2.0' apply false
+    id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
 }
 
 task clean(type: Delete) {

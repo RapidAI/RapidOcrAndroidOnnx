@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
 }
@@ -52,12 +52,6 @@ android {
             variant.outputs.all {
                 outputFileName = "${rootProject.name}-${defaultConfig.versionName}-${variant.buildType.name}.apk"
             }
-    }
-}
-
-repositories {
-    flatDir {
-        dirs '../common-aar', 'libs'
     }
 }
 

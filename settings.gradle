@@ -1,3 +1,22 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        jcenter()
+        flatDir {
+            dirs 'common-aar'
+        }
+    }
+}
 rootProject.name = "RapidOcrAndroidOnnx"
 include ':app'
 include ':OcrLibrary'

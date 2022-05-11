@@ -64,7 +64,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     //coroutines
-    def coroutines_version = '1.5.2'
+    def coroutines_version = '1.6.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
@@ -78,7 +78,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
     implementation project(":OcrLibrary")
 
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
@@ -88,7 +88,7 @@ dependencies {
     kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 
     // CameraX core library
-    def camerax_version = '1.1.0-beta01'
+    def camerax_version = '1.1.0-beta03'
     implementation "androidx.camera:camera-core:$camerax_version"
     // CameraX Camera2 extensions
     implementation "androidx.camera:camera-camera2:$camerax_version"

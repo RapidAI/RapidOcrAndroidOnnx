@@ -34,7 +34,7 @@
 
 ## 项目完整源码
 
-* 整合好源码和依赖库的完整工程项目，文件比较大，可到Q群共享内下载，以Project开头的压缩包文件为源码工程，例：Project_RapidOcrAndroidOnnx-版本号.7z
+* 整合好源码和依赖库的完整工程项目，可到Q群共享内下载或Release下载，以Project开头的压缩包文件为源码工程，例：Project_RapidOcrAndroidOnnx-版本号.7z
 * 如果想自己折腾，则请继续阅读本说明
 
 ## APK下载

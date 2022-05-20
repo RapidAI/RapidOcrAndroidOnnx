@@ -86,7 +86,7 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 * cls模型用于检测文字方向，只有一种模型
 * rec模型用于文字识别，有两种模型(server和mobile)，其中server体积大且较慢但效果好，mobile体积小且较快但效果差点。
 ```
-BaiPiaoOcrAndroidOnnx/OcrLibrary/src/main/assets
+RapidOcrAndroidOnnx/OcrLibrary/src/main/assets
     ├── ch_ppocr_mobile_v2.0_cls_infer.onnx
     ├── ch_PP-OCRv2_det_infer.onnx det二选一，推荐
     ├── ch_ppocr_server_v2.0_det_infer.onnx det二选一
@@ -95,7 +95,7 @@ BaiPiaoOcrAndroidOnnx/OcrLibrary/src/main/assets
     └── ppocr_keys_v1.txt
 ```
 * 代码中配置使用哪个模型
-BaiPiaoOcrAndroidOnnx/OcrLibrary/src/main/java/com/benjaminwan/ocrlibrary/OcrEngine.kt，在init方法中配置：
+  RapidOcrAndroidOnnx/OcrLibrary/src/main/java/com/benjaminwan/ocrlibrary/OcrEngine.kt，在init方法中配置：
 ```kotlin
 val ret = init(
             context.assets, numThread,
@@ -110,7 +110,7 @@ val ret = init(
 解压后目录结构为
 
 ```
-OcrLiteAndroidNcnn/OcrLibrary/src/sdk
+RapidOcrAndroidOnnx/OcrLibrary/src/sdk
     └── native
         ├── jni
         └── staticlibs
@@ -157,7 +157,7 @@ OcrLibrary/build
 ## 项目结构
 
 ```
-OcrLiteAndroidOnnx
+RapidOcrAndroidOnnx
     ├── app               # demo app
     ├── capture           # 截图
     ├── common-aar        # app引用的aar库

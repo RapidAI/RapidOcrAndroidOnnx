@@ -6,12 +6,14 @@ AngleNet::AngleNet() {}
 
 AngleNet::~AngleNet() {
     delete session;
-    for (auto name : inputNames) {
+    for (auto name: inputNames) {
         free(name);
     }
-    for (auto name : outputNames) {
+    inputNames.clear();
+    for (auto name: outputNames) {
         free(name);
     }
+    outputNames.clear();
 }
 
 void AngleNet::setNumThread(int numOfThread) {

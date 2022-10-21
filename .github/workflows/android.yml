@@ -42,18 +42,18 @@ jobs:
           7z x opencv-mobile-3.4.15-android.7z -aoa
           mv opencv-mobile-3.4.15-android/sdk OcrLibrary/src
 
-      # 下载onnxruntime-1.6.0-android.7z并解压到OcrLibrary/src/main/onnx
+      # 下载onnxruntime并解压到OcrLibrary/src/main/onnx
       - name: Download onnxruntime
         run: |
-          wget https://github.com/RapidAI/RapidOcrAndroidOnnx/releases/download/1.0.1/onnxruntime-1.6.0-android.7z -O onnxruntime-1.6.0-android.7z
-          7z x onnxruntime-1.6.0-android.7z -aoa
+          wget https://github.com/RapidAI/RapidOcrAndroidOnnx/releases/download/1.0.1/onnxruntime-1.12.1-android.7z -O onnxruntime-1.12.1-android.7z
+          7z x onnxruntime-1.12.1-android.7z -aoa
           mv onnx OcrLibrary/src/main
 
       # 下载模型并解压到OcrLibrary/src/main/assets
       - name: Download models
         run: |
-          wget https://github.com/RapidAI/RapidOcrAndroidOnnx/releases/download/1.0.1/RapidOcrOnnxModel-20210930.7z -O RapidOcrOnnxModel-20210930.7z
-          7z x RapidOcrOnnxModel-20210930.7z -aoa
+          wget https://github.com/RapidAI/RapidOcrAndroidOnnx/releases/download/1.0.1/RapidOcrOnnxModel-v3.7z -O RapidOcrOnnxModel-v3.7z
+          7z x RapidOcrOnnxModel-v3.7z -aoa
           mv assets OcrLibrary/src/main
 
       # Assemble Release apk

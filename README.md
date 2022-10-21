@@ -30,7 +30,7 @@
 
 ## 联系方式
 
-* QQ群：887298230 或 [连接](https://jq.qq.com/?_wv=1027&k=P9b3olx6)
+* QQ①群：887298230 或 [连接](https://jq.qq.com/?_wv=1027&k=P9b3olx6)
 
 ## 项目完整源码
 
@@ -39,7 +39,7 @@
 
 ## APK下载
 
-* 编译好的demo apk，可以在release中下载，或者Q群共享内下载，文件名例：OcrLiteAndroidOnnx-版本号-release.apk
+* 编译好的demo apk，可以在release中下载，或者Q群共享内下载，文件名例：RapidOcrAndroidOnnx-版本号-release.apk
 
 ## 简介
 
@@ -54,7 +54,7 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 3. Demo App以Kotlin-JVM编写；
 4. Android版与其它版本不同，包含了几个应用场景，包括相册识别、摄像头识别、手机IMEI号识别、摄像头身份证识别这几个功能页面；
 5. opencv 3.4.15，使用了[opencv-mobile](https://github.com/nihui/opencv-mobile)的代码，编译脚本在script文件夹里；
-6. onnxruntime动态库 1.6.0(因为当前模型不支持高版本)
+6. onnxruntime动态库 1.12.1
 
 ## 更新说明
 #### 2021-09-30 update 1.1.0
@@ -81,31 +81,7 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 1. AndroidStudio 2021.2.1或以上；
 2. NDK下载，在SDK Tools中下载，版本选最新版；
 3. cmake 3.4.1或以上，最好是3.18.1，在SDK Tools中下载；
-4. [模型下载](https://github.com/RapidAI/RapidOcrAndroidOnnx/releases/download/1.0.1/RapidOcrOnnxModel-20210930.7z)
-* det模型用于分割文字块，有两种模型(server和mobile)，其中server体积大且较慢但效果好，mobile体积小且较快但效果差点。
-* cls模型用于检测文字方向，只有一种模型
-* rec模型用于文字识别，有两种模型(server和mobile)，其中server体积大且较慢但效果好，mobile体积小且较快但效果差点。
-```
-RapidOcrAndroidOnnx/OcrLibrary/src/main/assets
-    ├── ch_ppocr_mobile_v2.0_cls_infer.onnx
-    ├── ch_PP-OCRv2_det_infer.onnx det二选一，推荐
-    ├── ch_ppocr_server_v2.0_det_infer.onnx det二选一
-    ├── ch_ppocr_mobile_v2.0_rec_infer.onnx rec二选一，推荐
-    ├── ch_ppocr_server_v2.0_rec_infer.onnx rec二选一
-    └── ppocr_keys_v1.txt
-```
-* 代码中配置使用哪个模型
-  RapidOcrAndroidOnnx/OcrLibrary/src/main/java/com/benjaminwan/ocrlibrary/OcrEngine.kt，在init方法中配置：
-```kotlin
-val ret = init(
-            context.assets, numThread,
-            "ch_PP-OCRv2_det_infer.onnx",
-            "ch_ppocr_mobile_v2.0_cls_infer.onnx",
-            "ch_ppocr_mobile_v2.0_rec_infer.onnx",
-            "ppocr_keys_v1.txt"
-        )
-```
-
+4. 整合好的范例工程自带了模型，在models文件夹中
 5. 下载opencv-mobile-3.4.15-android.7z，[下载地址](https://gitee.com/benjaminwan/ocr-lite-android-ncnn/attach_files/843219/download/opencv-mobile-3.4.15-android.7z)
 解压后目录结构为
 
@@ -170,7 +146,7 @@ RapidOcrAndroidOnnx
 
 ### 输入参数说明
 
-请参考[OnnxCpp项目说明](https://github.com/RapidAI/RapidOCR/tree/main/cpp)
+请参考[Cpp项目说明](https://github.com/RapidAI/RapidOcrOnnx)
 
 ## 关于作者
 

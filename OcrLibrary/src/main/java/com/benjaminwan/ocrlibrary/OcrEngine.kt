@@ -21,10 +21,10 @@ class OcrEngine(context: Context) {
         if (!ret) throw IllegalArgumentException()
     }
 
-    var padding: Int = 0
+    var padding: Int = 50
     var boxScoreThresh: Float = 0.5f
     var boxThresh: Float = 0.3f
-    var unClipRatio: Float = 2.0f
+    var unClipRatio: Float = 1.6f
     var doAngle: Boolean = true
     var mostAngle: Boolean = true
 

@@ -47,6 +47,10 @@ RapidOcr onnxruntime推理 for Android
 
 onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/microsoft/onnxruntime)
 
+此版本后续考虑停止维护
+
+新版：https://github.com/RapidAI/RapidOcrAndroidOnnxCompose
+
 ## 总体说明
 
 1. 封装为独立的Library，可以编译为aar，作为模块来调用；

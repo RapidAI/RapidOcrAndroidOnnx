@@ -6,14 +6,8 @@ DbNet::DbNet() {}
 
 DbNet::~DbNet() {
     delete session;
-    for (auto name: inputNames) {
-        free(name);
-    }
-    inputNames.clear();
-    for (auto name: outputNames) {
-        free(name);
-    }
-    outputNames.clear();
+    inputNamesPtr.clear();
+    outputNamesPtr.clear();
 }
 
 void DbNet::setNumThread(int numOfThread) {
@@ -42,8 +36,8 @@ void DbNet::initModel(AAssetManager *mgr, const std::string &name) {
     void *dbModelData = getModelDataFromAssets(mgr, name.c_str(), dbModelDataLength);
     session = new Ort::Session(ortEnv, dbModelData, dbModelDataLength, sessionOptions);
     free(dbModelData);
-    inputNames = getInputNames(session);
-    outputNames = getOutputNames(session);
+    inputNamesPtr = getInputNames(session);
+    outputNamesPtr = getOutputNames(session);
 }
 
 std::vector<TextBox> findRsBoxes(const cv::Mat &predMat, const cv::Mat &dilateMat, ScaleParam &s,
@@ -122,6 +116,8 @@ DbNet::getTextBoxes(cv::Mat &src, ScaleParam &s, float boxScoreThresh, float box
                                                              inputShape.data(),
                                                              inputShape.size());
     assert(inputTensor.IsTensor());
+    std::vector<const char *> inputNames = {inputNamesPtr.data()->get()};
+    std::vector<const char *> outputNames = {outputNamesPtr.data()->get()};
     auto outputTensor = session->Run(Ort::RunOptions{nullptr}, inputNames.data(), &inputTensor,
                                      inputNames.size(), outputNames.data(), outputNames.size());
     assert(outputTensor.size() == 1 && outputTensor.front().IsTensor());

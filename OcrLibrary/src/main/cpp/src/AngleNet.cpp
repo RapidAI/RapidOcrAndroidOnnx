@@ -6,14 +6,8 @@ AngleNet::AngleNet() {}
 
 AngleNet::~AngleNet() {
     delete session;
-    for (auto name: inputNames) {
-        free(name);
-    }
-    inputNames.clear();
-    for (auto name: outputNames) {
-        free(name);
-    }
-    outputNames.clear();
+    inputNamesPtr.clear();
+    outputNamesPtr.clear();
 }
 
 void AngleNet::setNumThread(int numOfThread) {
@@ -43,8 +37,8 @@ void AngleNet::initModel(AAssetManager *mgr, const std::string &name) {
     session = new Ort::Session(ortEnv, dbModelData, dbModelDataLength,
                                sessionOptions);
     free(dbModelData);
-    inputNames = getInputNames(session);
-    outputNames = getOutputNames(session);
+    inputNamesPtr = getInputNames(session);
+    outputNamesPtr = getOutputNames(session);
 }
 
 Angle scoreToAngle(const std::vector<float> &outputData) {
@@ -72,7 +66,8 @@ Angle AngleNet::getAngle(cv::Mat &src) {
                                                              inputShape.data(),
                                                              inputShape.size());
     assert(inputTensor.IsTensor());
-
+    std::vector<const char *> inputNames = {inputNamesPtr.data()->get()};
+    std::vector<const char *> outputNames = {outputNamesPtr.data()->get()};
     auto outputTensor = session->Run(Ort::RunOptions{nullptr}, inputNames.data(), &inputTensor,
                                      inputNames.size(), outputNames.data(), outputNames.size());
 

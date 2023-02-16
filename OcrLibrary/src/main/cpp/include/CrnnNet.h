@@ -2,7 +2,7 @@
 #define __OCR_CRNNNET_H__
 
 #include "OcrStruct.h"
-#include "onnx/onnxruntime_cxx_api.h"
+#include "onnxruntime/core/session/onnxruntime_cxx_api.h"
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <android/asset_manager.h>
@@ -26,8 +26,9 @@ private:
     Ort::Env ortEnv = Ort::Env(ORT_LOGGING_LEVEL_ERROR, "CrnnNet");
     Ort::SessionOptions sessionOptions = Ort::SessionOptions();
     int numThread = 0;
-    std::vector<char *> inputNames;
-    std::vector<char *> outputNames;
+
+    std::vector<Ort::AllocatedStringPtr> inputNamesPtr;
+    std::vector<Ort::AllocatedStringPtr> outputNamesPtr;
 
     const float meanValues[3] = {127.5, 127.5, 127.5};
     const float normValues[3] = {1.0 / 127.5, 1.0 / 127.5, 1.0 / 127.5};

@@ -2,7 +2,7 @@
 #define __OCR_ANGLENET_H__
 
 #include "OcrStruct.h"
-#include "onnx/onnxruntime_cxx_api.h"
+#include "onnxruntime/core/session/onnxruntime_cxx_api.h"
 #include <opencv2/core.hpp>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
@@ -25,8 +25,8 @@ private:
     Ort::SessionOptions sessionOptions = Ort::SessionOptions();
     int numThread = 0;
 
-    std::vector<char *> inputNames;
-    std::vector<char *> outputNames;
+    std::vector<Ort::AllocatedStringPtr> inputNamesPtr;
+    std::vector<Ort::AllocatedStringPtr> outputNamesPtr;
 
     const float meanValues[3] = {127.5, 127.5, 127.5};
     const float normValues[3] = {1.0 / 127.5, 1.0 / 127.5, 1.0 / 127.5};

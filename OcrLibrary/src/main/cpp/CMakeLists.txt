@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.22.1)
 project(RapidOcr)
-#ONNX
-set(ONNX_DIR "${CMAKE_SOURCE_DIR}/../onnx")
-find_package(ONNX REQUIRED)
-if (ONNX_FOUND)
-    message(STATUS "ONNX_LIBS: ${ONNX_LIBS}")
-    message(STATUS "ONNX_INCLUDE_DIRS: ${ONNX_INCLUDE_DIRS}")
+# OnnxRuntime
+include(${CMAKE_CURRENT_SOURCE_DIR}/../onnxruntime-shared/OnnxRuntimeWrapper.cmake)
+find_package(OnnxRuntime REQUIRED)
+if (OnnxRuntime_FOUND)
+    message(STATUS "OnnxRuntime_LIBS: ${OnnxRuntime_LIBS}")
+    message(STATUS "OnnxRuntime_INCLUDE_DIRS: ${OnnxRuntime_INCLUDE_DIRS}")
 else ()
     message(FATAL_ERROR "onnxruntime Not Found!")
-endif (ONNX_FOUND)
+endif (OnnxRuntime_FOUND)
 
 ## opencv 库
 set(OpenCV_DIR "${CMAKE_SOURCE_DIR}/../../sdk/native/jni")
@@ -55,7 +55,7 @@ find_library(
 
 target_link_libraries(
         RapidOcr
-        ${ONNX_LIBS}
+        ${OnnxRuntime_LIBS}
         ${OpenCV_LIBS}
         android
         z

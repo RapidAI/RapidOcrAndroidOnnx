@@ -3,7 +3,7 @@
 
 #include <opencv2/core.hpp>
 #include "OcrStruct.h"
-#include "onnx/onnxruntime_cxx_api.h"
+#include "onnxruntime/core/session/onnxruntime_cxx_api.h"
 #include <android/log.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
@@ -73,7 +73,7 @@ cv::Mat matRotateClockWise180(cv::Mat src);
 
 cv::Mat matRotateClockWise90(cv::Mat src);
 
-cv::Mat GetRotateCropImage(const cv::Mat &src, std::vector<cv::Point> box);
+cv::Mat getRotateCropImage(const cv::Mat &src, std::vector<cv::Point> box);
 
 cv::Mat adjustTargetImg(cv::Mat &src, int dstWidth, int dstHeight);
 
@@ -88,9 +88,9 @@ substractMeanNormalize(cv::Mat &src, const float *meanVals, const float *normVal
 
 std::vector<int> getAngleIndexes(std::vector<Angle> &angles);
 
-std::vector<char *> getInputNames(Ort::Session *session);
+std::vector<Ort::AllocatedStringPtr> getInputNames(Ort::Session *session);
 
-std::vector<char *> getOutputNames(Ort::Session *session);
+std::vector<Ort::AllocatedStringPtr> getOutputNames(Ort::Session *session);
 
 void *getModelDataFromAssets(AAssetManager *mgr, const char *modelName, int &size);
 

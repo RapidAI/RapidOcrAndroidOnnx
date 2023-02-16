@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">appjava</string>
+    <string name="storage_permission">获取存储权限</string>
+</resources>

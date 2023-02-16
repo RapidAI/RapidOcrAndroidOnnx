@@ -28,8 +28,6 @@ RapidOcrAndroidOnnx/OcrLibrary/src/main/onnxruntime-shared
 └── x86_64
 ```
 
-7. 编译好的apk大约3xMB
-
 ### 编译Release包
 
 * mac/linux使用命令编译```./gradlew assembleRelease```

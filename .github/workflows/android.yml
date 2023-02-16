@@ -9,16 +9,21 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+
+    env:
+      ONNX_VERSION: 1.14.0
+      ONNX_PKG_NAME: onnxruntime-1.14.0-android-shared
+
     steps:
       # 检出代码
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Unshallow
         run: git fetch --prune --unshallow
 
       # 设置JDK版本
       - name: set up JDK 11
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'
@@ -26,7 +31,7 @@ jobs:
       # 缓存依赖项
       # https://docs.github.com/cn/actions/guides/building-and-testing-java-with-gradle#caching-dependencies
       - name: Cache Gradle packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
@@ -42,12 +47,13 @@ jobs:
           7z x opencv-mobile-3.4.15-android.7z -aoa
           mv opencv-mobile-3.4.15-android/sdk OcrLibrary/src
 
-      # 下载onnxruntime并解压到OcrLibrary/src/main/onnx
+      # 下载onnxruntime并解压到OcrLibrary/src/main
       - name: Download onnxruntime
         run: |
-          wget https://github.com/RapidAI/RapidOcrAndroidOnnx/releases/download/1.0.1/onnxruntime-1.12.1-android.7z -O onnxruntime-1.12.1-android.7z
-          7z x onnxruntime-1.12.1-android.7z -aoa
-          mv onnx OcrLibrary/src/main
+          wget https://github.com/RapidAI/OnnxruntimeBuilder/releases/download/${{ env.ONNX_VERSION }}/${{ env.ONNX_PKG_NAME }}.7z -O ${{ env.ONNX_PKG_NAME }}.7z
+          7z x ${{ env.ONNX_PKG_NAME }}.7z -aoa
+          mv onnxruntime-shared OcrLibrary/src/main
+
 
       # 下载模型并解压到OcrLibrary/src/main/assets
       - name: Download models
@@ -69,7 +75,7 @@ jobs:
       # 上传apk 到action(需要定制)
       # https://github.com/marketplace/actions/upload-a-build-artifact
       - name: Upload APK/AAR
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: outputs
           path: |
@@ -169,7 +175,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: Release.txt
-          draft: true
+          draft: false
           files: |
             ${{ steps.apk-path.outputs.path }}
             ${{ steps.aar-path.outputs.path }}

@@ -2,7 +2,7 @@ package com.benjaminwan.ocrlibrary
 
 import android.graphics.Bitmap
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 open class OcrOutput
 

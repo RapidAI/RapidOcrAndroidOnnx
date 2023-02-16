@@ -2,12 +2,12 @@ package com.benjaminwan.ocr.onnx.models
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.airbnb.epoxy.AfterPropsSet
 import com.airbnb.epoxy.ModelView
 import com.airbnb.epoxy.TextProp
-import com.benjaminwan.ocr.onnx.R
+import com.benjaminwan.ocr.onnx.databinding.RvDebugViewItemBinding
 
 // The ModelView annotation is used on Views to have models generated from those views.
 // This is pretty straightforward with Kotlin, but properties need some special handling.
@@ -18,29 +18,11 @@ class DebugItemView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private lateinit var blockIndexTv: TextView
-    private lateinit var boxPointTv: TextView
-    private lateinit var boxScoreTv: TextView
-    private lateinit var angleIndexTv: TextView
-    private lateinit var angleScoreTv: TextView
-    private lateinit var angleTimeTv: TextView
-    private lateinit var textTv: TextView
-    private lateinit var charScoresTv: TextView
-    private lateinit var crnnTimeTv: TextView
-    private lateinit var blockTimeTv: TextView
+    private val binding: RvDebugViewItemBinding =
+        RvDebugViewItemBinding.inflate(LayoutInflater.from(this.context), this, true)
 
     init {
-        inflate(context, R.layout.rv_debug_view_item, this)
-        blockIndexTv = findViewById(R.id.blockIndexTv)
-        boxPointTv = findViewById(R.id.boxPointTv)
-        boxScoreTv = findViewById(R.id.boxScoreTv)
-        angleIndexTv = findViewById(R.id.angleIndexTv)
-        angleScoreTv = findViewById(R.id.angleScoreTv)
-        angleTimeTv = findViewById(R.id.angleTimeTv)
-        textTv = findViewById(R.id.textTv)
-        charScoresTv = findViewById(R.id.charScoresTv)
-        crnnTimeTv = findViewById(R.id.crnnTimeTv)
-        blockTimeTv = findViewById(R.id.blockTimeTv)
+
     }
 
     // 2. Or you can use lateinit
@@ -76,15 +58,15 @@ class DebugItemView @JvmOverloads constructor(
 
     @AfterPropsSet
     fun useProps() {
-        blockIndexTv.text = index
-        boxPointTv.text = boxPoint
-        boxScoreTv.text = boxScore
-        angleIndexTv.text = angleIndex
-        angleScoreTv.text = angleScore
-        angleTimeTv.text = angleTime
-        textTv.text = text
-        charScoresTv.text = charScores
-        crnnTimeTv.text = crnnTime
-        blockTimeTv.text = blockTime
+        binding.blockIndexTv.text = index
+        binding.content.boxPointTv.text = boxPoint
+        binding.content.boxScoreTv.text = boxScore
+        binding.content.angleIndexTv.text = angleIndex
+        binding.content.angleScoreTv.text = angleScore
+        binding.content.angleTimeTv.text = angleTime
+        binding.content.textTv.text = text
+        binding.content.charScoresTv.text = charScores
+        binding.content.crnnTimeTv.text = crnnTime
+        binding.content.blockTimeTv.text = blockTime
     }
 }

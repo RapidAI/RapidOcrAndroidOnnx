@@ -5,11 +5,9 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.airbnb.epoxy.EpoxyRecyclerView
 import com.benjaminwan.ocr.onnx.R
+import com.benjaminwan.ocr.onnx.databinding.DialogDebugBinding
 import com.benjaminwan.ocr.onnx.models.dbNetTimeItemView
 import com.benjaminwan.ocr.onnx.models.debugItemView
 import com.benjaminwan.ocr.onnx.utils.format
@@ -35,29 +33,20 @@ class DebugDialog : BaseDialog(), View.OnClickListener {
     private var textBlocks: MutableList<TextBlock> = mutableListOf()
     private var dbnetTime: Double = 0.0
 
-    private lateinit var debugRV: EpoxyRecyclerView
-    private lateinit var negativeBtn: Button
-    private lateinit var positiveBtn: Button
-    private lateinit var titleTV: TextView
+    private var _binding: DialogDebugBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         viewGroup: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.dialog_debug, viewGroup, false)
-    }
-
-    private fun findViews(view: View) {
-        debugRV = view.findViewById(R.id.debugRV)
-        negativeBtn = view.findViewById(R.id.negativeBtn)
-        positiveBtn = view.findViewById(R.id.positiveBtn)
-        titleTV = view.findViewById(R.id.titleTV)
+    ): View {
+        _binding = DialogDebugBinding.inflate(inflater, viewGroup, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        findViews(view)
         initViews()
     }
 
@@ -67,11 +56,11 @@ class DebugDialog : BaseDialog(), View.OnClickListener {
     }
 
     private fun initViews() {
-        debugRV.setHasFixedSize(true)
-        debugRV.itemAnimator = DefaultItemAnimator()
-        debugRV.setMarginItemDecoration(2, 1, 2, 1)
+        binding.debugRV.setHasFixedSize(true)
+        binding.debugRV.itemAnimator = DefaultItemAnimator()
+        binding.debugRV.setMarginItemDecoration(2, 1, 2, 1)
 
-        debugRV.withModels {
+        binding.debugRV.withModels {
             dbNetTimeItemView {
                 id("dbnet time item")
                 dbNetTimeStr(dbnetTime.format("#0.00") + "ms")
@@ -95,10 +84,10 @@ class DebugDialog : BaseDialog(), View.OnClickListener {
             }
         }
 
-        negativeBtn.setOnClickListener(this)
-        positiveBtn.setOnClickListener(this)
+        binding.negativeBtn.setOnClickListener(this)
+        binding.positiveBtn.setOnClickListener(this)
         if (title.isNotEmpty()) {
-            titleTV.text = title
+            binding.titleTV.text = title
         }
 
     }

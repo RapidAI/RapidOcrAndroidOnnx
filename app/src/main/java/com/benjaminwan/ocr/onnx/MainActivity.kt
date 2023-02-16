@@ -3,33 +3,24 @@ package com.benjaminwan.ocr.onnx
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.benjaminwan.ocr.onnx.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-
-    private lateinit var galleryBtn: Button
-    private lateinit var cameraBtn: Button
-    private lateinit var imeiBtn: Button
-    private lateinit var plateBtn: Button
-    private lateinit var idCardBtn: Button
+    private lateinit var binding: ActivityMainBinding
 
     private fun initViews() {
-        galleryBtn = findViewById(R.id.galleryBtn)
-        cameraBtn = findViewById(R.id.cameraBtn)
-        imeiBtn = findViewById(R.id.imeiBtn)
-        plateBtn = findViewById(R.id.plateBtn)
-        idCardBtn = findViewById(R.id.idCardBtn)
-        galleryBtn.setOnClickListener(this)
-        cameraBtn.setOnClickListener(this)
-        imeiBtn.setOnClickListener(this)
-        plateBtn.setOnClickListener(this)
-        idCardBtn.setOnClickListener(this)
+        binding.galleryBtn.setOnClickListener(this)
+        binding.cameraBtn.setOnClickListener(this)
+        binding.imeiBtn.setOnClickListener(this)
+        binding.plateBtn.setOnClickListener(this)
+        binding.idCardBtn.setOnClickListener(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initViews()
     }
 

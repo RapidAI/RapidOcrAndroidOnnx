@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -163,26 +162,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="选中一张图片测试取平均耗时" />
-
-        <Button
-            android:id="@+id/benchBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="测试"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:orientation="horizontal">
@@ -204,6 +183,31 @@
             android:textSize="12sp" />
 
         <Button
+            android:id="@+id/stopBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="停止"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/benchBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="50次平均耗时"
+            android:textSize="12sp" />
+
+        <Button
             android:id="@+id/resultBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -218,7 +222,7 @@
             android:layout_weight="1"
             android:text="调试信息"
             android:textSize="12sp" />
-    </LinearLayout>
 
+    </LinearLayout>
 
 </LinearLayout>

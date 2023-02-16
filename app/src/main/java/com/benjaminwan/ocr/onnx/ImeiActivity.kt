@@ -7,12 +7,9 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.afollestad.assent.Permission
@@ -20,6 +17,7 @@ import com.afollestad.assent.askForPermissions
 import com.afollestad.assent.isAllGranted
 import com.afollestad.assent.rationale.createDialogRationale
 import com.benjaminwan.ocr.onnx.app.App
+import com.benjaminwan.ocr.onnx.databinding.ActivityImeiBinding
 import com.benjaminwan.ocr.onnx.utils.getMatchImeiStr
 import com.benjaminwan.ocr.onnx.utils.replaceBlank
 import com.benjaminwan.ocr.onnx.utils.showToast
@@ -27,7 +25,6 @@ import com.benjaminwan.ocrlibrary.OcrFailed
 import com.benjaminwan.ocrlibrary.OcrResult
 import com.benjaminwan.ocrlibrary.OcrStop
 import com.orhanobut.logger.Logger
-import jsc.kit.cameramask.CameraLensView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -38,10 +35,11 @@ import kotlin.math.max
 
 class ImeiActivity : AppCompatActivity(), View.OnClickListener {
 
+    private lateinit var binding: ActivityImeiBinding
+
     private var preview: Preview? = null
     private var imageCapture: ImageCapture? = null
     private var camera: Camera? = null
-    private lateinit var viewFinder: PreviewView
     private var detectStart: Boolean = false
 
     private val vibrator: Vibrator by lazy {
@@ -60,25 +58,16 @@ class ImeiActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private lateinit var startBtn: Button
-    private lateinit var stopBtn: Button
-    private lateinit var resultEdit: EditText
-    private lateinit var cameraLensView: CameraLensView
-
     private fun initViews() {
-        startBtn = findViewById(R.id.startBtn)
-        stopBtn = findViewById(R.id.stopBtn)
-        resultEdit = findViewById(R.id.resultEdit)
-        cameraLensView = findViewById(R.id.cameraLensView)
-        startBtn.setOnClickListener(this)
-        stopBtn.setOnClickListener(this)
+        binding.startBtn.setOnClickListener(this)
+        binding.stopBtn.setOnClickListener(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.ocrEngine.doAngle = false//摄像头拍摄一般都是正的，不需要判断方向
-        setContentView(R.layout.activity_imei)
-        viewFinder = findViewById(R.id.viewFinder)
+        binding = ActivityImeiBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initViews()
     }
 
@@ -103,12 +92,12 @@ class ImeiActivity : AppCompatActivity(), View.OnClickListener {
                     showToast("未获取权限，应用无法正常使用！")
                 } else {
                     startCamera()
-                    viewFinder.postDelayed({ detectLoop() }, 100)
+                    binding.viewFinder.postDelayed({ detectLoop() }, 100)
                 }
             }
         } else {
             startCamera()
-            viewFinder.postDelayed({ detectLoop() }, 100)
+            binding.viewFinder.postDelayed({ detectLoop() }, 100)
         }
     }
 
@@ -118,7 +107,7 @@ class ImeiActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setResult() {
-        val text = resultEdit.text.toString().trim()
+        val text = binding.resultEdit.text.toString().trim()
         if (text.isNotEmpty()) {
             val result = Intent().apply {
                 putExtra("scanResult", text)
@@ -133,9 +122,9 @@ class ImeiActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showResult(result: OcrResult) {
-        cameraLensView.cameraLensBitmap = result.boxImg
-        resultEdit.setText(result.strRes)
-        resultEdit.setSelection(result.strRes.length)
+        binding.cameraLensView.cameraLensBitmap = result.boxImg
+        binding.resultEdit.setText(result.strRes)
+        binding.resultEdit.setSelection(result.strRes.length)
     }
 
     override fun onClick(view: View?) {
@@ -158,20 +147,20 @@ class ImeiActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setDetectState(isStart: Boolean) {
         detectStart = isStart
-        startBtn.isEnabled = !isStart
-        stopBtn.isEnabled = isStart
-        resultEdit.isEnabled = !isStart
+        binding.startBtn.isEnabled = !isStart
+        binding.stopBtn.isEnabled = isStart
+        binding.resultEdit.isEnabled = !isStart
     }
 
     private fun getBitMap(): Bitmap? {
-        val camPic = viewFinder.bitmap ?: return null
+        val camPic = binding.viewFinder.bitmap ?: return null
         if (camPic.width <= 0 || camPic.height <= 0) return null
-        return cameraLensView.cropCameraLensRectBitmap(camPic, false)
+        return binding.cameraLensView.cropCameraLensRectBitmap(camPic, false)
     }
 
     private fun detectLoop() {
-        cameraLensView.cameraLensBitmap = null
-        resultEdit.setText("")
+        binding.cameraLensView.cameraLensBitmap = null
+        binding.resultEdit.setText("")
         setDetectState(true)
         flow {
             var success: OcrResult? = null
@@ -180,7 +169,7 @@ class ImeiActivity : AppCompatActivity(), View.OnClickListener {
                 bitmap ?: continue
                 val once = detectOnce(bitmap)
                 Logger.i(once.strRes)
-                val matchId = getMatchImeiStr(once.strRes.replaceBlank().toUpperCase())
+                val matchId = getMatchImeiStr(once.strRes.replaceBlank().uppercase())
                 if (matchId != null) {
                     success = once.copy(strRes = matchId)
                 }
@@ -237,7 +226,7 @@ class ImeiActivity : AppCompatActivity(), View.OnClickListener {
 
                 // Bind use cases to camera
                 camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
-                preview?.setSurfaceProvider(viewFinder.surfaceProvider)
+                preview?.setSurfaceProvider(binding.viewFinder.surfaceProvider)
             } catch (exc: Exception) {
                 Logger.e("Use case binding failed", exc)
             }

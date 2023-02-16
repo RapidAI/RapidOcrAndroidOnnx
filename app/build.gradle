@@ -53,6 +53,10 @@ android {
                 outputFileName = "${rootProject.name}-${defaultConfig.versionName}-${variant.buildType.name}.apk"
             }
     }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {

@@ -7,13 +7,10 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.afollestad.assent.Permission
@@ -21,6 +18,7 @@ import com.afollestad.assent.askForPermissions
 import com.afollestad.assent.isAllGranted
 import com.afollestad.assent.rationale.createDialogRationale
 import com.benjaminwan.ocr.onnx.app.App
+import com.benjaminwan.ocr.onnx.databinding.ActivityIdcardFrontBinding
 import com.benjaminwan.ocr.onnx.models.IdCardFront
 import com.benjaminwan.ocr.onnx.utils.getMatchIdCardNumberStr
 import com.benjaminwan.ocr.onnx.utils.showToast
@@ -28,7 +26,6 @@ import com.benjaminwan.ocr.onnx.utils.trimBlankAndSymbols
 import com.benjaminwan.ocrlibrary.OcrFailed
 import com.benjaminwan.ocrlibrary.OcrResult
 import com.benjaminwan.ocrlibrary.OcrStop
-import com.mywork.idcardview.IdCardFrontView
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -40,10 +37,11 @@ import kotlin.math.max
 
 class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
 
+    private lateinit var binding: ActivityIdcardFrontBinding
+
     private var preview: Preview? = null
     private var imageCapture: ImageCapture? = null
     private var camera: Camera? = null
-    private lateinit var viewFinder: PreviewView
     private var detectStart: Boolean = false
 
     private val vibrator: Vibrator by lazy {
@@ -62,47 +60,15 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private lateinit var startBtn: Button
-    private lateinit var stopBtn: Button
-    private lateinit var clearNameBtn: ImageButton
-    private lateinit var clearGenderBtn: ImageButton
-    private lateinit var clearNationBtn: ImageButton
-    private lateinit var clearBirthBtn: ImageButton
-    private lateinit var clearAddressBtn: ImageButton
-    private lateinit var clearNumberBtn: ImageButton
-    private lateinit var nameEdit: EditText
-    private lateinit var genderEdit: EditText
-    private lateinit var nationEdit: EditText
-    private lateinit var birthDateEdit: EditText
-    private lateinit var addressEdit: EditText
-    private lateinit var numberEdit: EditText
-    private lateinit var idCardFrontView: IdCardFrontView
-
     private fun initViews() {
-        viewFinder = findViewById(R.id.viewFinder)
-        startBtn = findViewById(R.id.startBtn)
-        stopBtn = findViewById(R.id.stopBtn)
-        clearNameBtn = findViewById(R.id.clearNameBtn)
-        clearGenderBtn = findViewById(R.id.clearGenderBtn)
-        clearNationBtn = findViewById(R.id.clearNationBtn)
-        clearBirthBtn = findViewById(R.id.clearBirthBtn)
-        clearAddressBtn = findViewById(R.id.clearAddressBtn)
-        clearNumberBtn = findViewById(R.id.clearNumberBtn)
-        nameEdit = findViewById(R.id.nameEdit)
-        genderEdit = findViewById(R.id.genderEdit)
-        nationEdit = findViewById(R.id.nationEdit)
-        birthDateEdit = findViewById(R.id.birthDateEdit)
-        addressEdit = findViewById(R.id.addressEdit)
-        numberEdit = findViewById(R.id.numberEdit)
-        idCardFrontView = findViewById(R.id.idCardFrontView)
-        startBtn.setOnClickListener(this)
-        stopBtn.setOnClickListener(this)
-        clearNameBtn.setOnClickListener(this)
-        clearGenderBtn.setOnClickListener(this)
-        clearNationBtn.setOnClickListener(this)
-        clearBirthBtn.setOnClickListener(this)
-        clearAddressBtn.setOnClickListener(this)
-        clearNumberBtn.setOnClickListener(this)
+        binding.startBtn.setOnClickListener(this)
+        binding.stopBtn.setOnClickListener(this)
+        binding.clearNameBtn.setOnClickListener(this)
+        binding.clearGenderBtn.setOnClickListener(this)
+        binding.clearNationBtn.setOnClickListener(this)
+        binding.clearBirthBtn.setOnClickListener(this)
+        binding.clearAddressBtn.setOnClickListener(this)
+        binding.clearNumberBtn.setOnClickListener(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,7 +77,8 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
         App.ocrEngine.padding = 200
         App.ocrEngine.boxScoreThresh = 0.1f
         App.ocrEngine.unClipRatio = 2.0f
-        setContentView(R.layout.activity_idcard_front)
+        binding = ActivityIdcardFrontBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initViews()
     }
 
@@ -136,12 +103,12 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
                     showToast("未获取权限，应用无法正常使用！")
                 } else {
                     startCamera()
-                    viewFinder.postDelayed({ detectLoop() }, 100)
+                    binding.viewFinder.postDelayed({ detectLoop() }, 100)
                 }
             }
         } else {
             startCamera()
-            viewFinder.postDelayed({ detectLoop() }, 100)
+            binding.viewFinder.postDelayed({ detectLoop() }, 100)
         }
     }
 
@@ -151,7 +118,7 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setResult() {
-        val text = numberEdit.text.toString().trim()
+        val text = binding.numberEdit.text.toString().trim()
         if (text.isNotEmpty()) {
             val result = Intent().apply {
                 putExtra("scanResult", text)
@@ -171,12 +138,12 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showResult(result: IdCardFront) {
-        setEdit(nameEdit, result.name)
-        setEdit(genderEdit, result.gender)
-        setEdit(nationEdit, result.nation)
-        setEdit(birthDateEdit, result.birth)
-        setEdit(addressEdit, result.address)
-        setEdit(numberEdit, result.number)
+        setEdit(binding.nameEdit, result.name)
+        setEdit(binding.genderEdit, result.gender)
+        setEdit(binding.nationEdit, result.nation)
+        setEdit(binding.birthDateEdit, result.birth)
+        setEdit(binding.addressEdit, result.address)
+        setEdit(binding.numberEdit, result.number)
     }
 
     override fun onClick(view: View?) {
@@ -189,22 +156,22 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
                 detectStart = false
             }
             R.id.clearNameBtn -> {
-                nameEdit.setText("")
+                binding.nameEdit.setText("")
             }
             R.id.clearGenderBtn -> {
-                genderEdit.setText("")
+                binding.genderEdit.setText("")
             }
             R.id.clearNationBtn -> {
-                nationEdit.setText("")
+                binding.nationEdit.setText("")
             }
             R.id.clearBirthBtn -> {
-                birthDateEdit.setText("")
+                binding.birthDateEdit.setText("")
             }
             R.id.clearAddressBtn -> {
-                addressEdit.setText("")
+                binding.addressEdit.setText("")
             }
             R.id.clearNumberBtn -> {
-                numberEdit.setText("")
+                binding.numberEdit.setText("")
             }
         }
     }
@@ -218,21 +185,21 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setDetectState(isStart: Boolean) {
         detectStart = isStart
-        startBtn.isEnabled = !isStart
-        stopBtn.isEnabled = isStart
-        nameEdit.isEnabled = !isStart
-        genderEdit.isEnabled = !isStart
-        nationEdit.isEnabled = !isStart
-        birthDateEdit.isEnabled = !isStart
-        addressEdit.isEnabled = !isStart
-        numberEdit.isEnabled = !isStart
-        clearNameBtn.isEnabled = !isStart
-        clearGenderBtn.isEnabled = !isStart
-        clearNationBtn.isEnabled = !isStart
-        clearBirthBtn.isEnabled = !isStart
-        clearAddressBtn.isEnabled = !isStart
-        clearNumberBtn.isEnabled = !isStart
-        if (isStart) idCardFrontView.bitmap = null
+        binding.startBtn.isEnabled = !isStart
+        binding.stopBtn.isEnabled = isStart
+        binding.nameEdit.isEnabled = !isStart
+        binding.genderEdit.isEnabled = !isStart
+        binding.nationEdit.isEnabled = !isStart
+        binding.birthDateEdit.isEnabled = !isStart
+        binding.addressEdit.isEnabled = !isStart
+        binding.numberEdit.isEnabled = !isStart
+        binding.clearNameBtn.isEnabled = !isStart
+        binding.clearGenderBtn.isEnabled = !isStart
+        binding.clearNationBtn.isEnabled = !isStart
+        binding.clearBirthBtn.isEnabled = !isStart
+        binding.clearAddressBtn.isEnabled = !isStart
+        binding.clearNumberBtn.isEnabled = !isStart
+        if (isStart) binding.idCardFrontView.bitmap = null
     }
 
     private fun detectLoop() {
@@ -245,11 +212,14 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
             var addressStr: String? = null
             val start = System.currentTimeMillis()
             do {
-                val cameraBitmap = withContext(Dispatchers.Main) { viewFinder.bitmap } ?: continue
+                val cameraBitmap =
+                    withContext(Dispatchers.Main) { binding.viewFinder.bitmap } ?: continue
                 if (cameraBitmap.width <= 0 || cameraBitmap.height <= 0) continue
                 //先识别身份证号
                 if (numberStr == null) {
-                    val numberBitmap = withContext(Dispatchers.Main) { idCardFrontView.cropNumberBitmap(cameraBitmap) }
+                    val numberBitmap = withContext(Dispatchers.Main) {
+                        binding.idCardFrontView.cropNumberBitmap(cameraBitmap)
+                    }
                     val numberOnce = detectOnce(numberBitmap)
                     Logger.i(numberOnce.strRes)
                     numberStr =
@@ -257,7 +227,12 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 //识别姓名
                 if (nameStr == null) {
-                    val nameBitmap = withContext(Dispatchers.Main) { idCardFrontView.cropNameBitmap(cameraBitmap) }
+                    val nameBitmap =
+                        withContext(Dispatchers.Main) {
+                            binding.idCardFrontView.cropNameBitmap(
+                                cameraBitmap
+                            )
+                        }
                     val nameOnce = detectOnce(nameBitmap)
                     Logger.i(nameOnce.toString())
                     val nameLine = nameOnce.textBlocks.sortedBy { it.boxPoint.first().x }
@@ -274,7 +249,9 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 //民族
                 if (nationStr == null) {
-                    val nationBitmap = withContext(Dispatchers.Main) { idCardFrontView.cropNationBitmap(cameraBitmap) }
+                    val nationBitmap = withContext(Dispatchers.Main) {
+                        binding.idCardFrontView.cropNationBitmap(cameraBitmap)
+                    }
                     val nationOnce = detectOnce(nationBitmap)
                     Logger.i(nationOnce.toString())
                     val nationLine = nationOnce.textBlocks.sortedBy { it.boxPoint.first().x }
@@ -294,7 +271,9 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
 
                 //住址
                 if (addressStr == null) {
-                    val addressBitmap = withContext(Dispatchers.Main) { idCardFrontView.cropAddressBitmap(cameraBitmap) }
+                    val addressBitmap = withContext(Dispatchers.Main) {
+                        binding.idCardFrontView.cropAddressBitmap(cameraBitmap)
+                    }
                     val addressOnce = detectOnce(addressBitmap)
                     Logger.i(addressOnce.toString())
                     val addressLine = addressOnce.textBlocks.sortedBy { it.boxPoint.first().y }
@@ -372,7 +351,7 @@ class IdCardFrontActivity : AppCompatActivity(), View.OnClickListener {
 
                 // Bind use cases to camera
                 camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
-                preview?.setSurfaceProvider(viewFinder.surfaceProvider)
+                preview?.setSurfaceProvider(binding.viewFinder.surfaceProvider)
             } catch (exc: Exception) {
                 Logger.e("Use case binding failed", exc)
             }

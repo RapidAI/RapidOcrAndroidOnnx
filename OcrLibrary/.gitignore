@@ -4,3 +4,4 @@
 /src/main/assets
 /src/sdk
 /src/main/onnx
+/src/main/onnxruntime-shared

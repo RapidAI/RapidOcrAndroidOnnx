@@ -14,8 +14,7 @@
     - [总体说明](#总体说明)
     - [更新说明](#更新说明)
     - [编译说明](#编译说明)
-        - [编译Release包](#编译Release包)
-        - [重新编译](#重新编译)
+    - [使用说明](#使用说明)
     - [项目结构](#项目结构)
     - [常见问题](#常见问题)
         - [输入参数说明](#输入参数说明)
@@ -47,8 +46,6 @@ RapidOcr onnxruntime推理 for Android
 
 onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/microsoft/onnxruntime)
 
-此版本后续考虑停止维护
-
 新版：https://github.com/RapidAI/RapidOcrAndroidOnnxCompose
 
 ## 总体说明
@@ -58,10 +55,9 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 3. Demo App以Kotlin-JVM编写；
 4. Android版与其它版本不同，包含了几个应用场景，包括相册识别、摄像头识别、手机IMEI号识别、摄像头身份证识别这几个功能页面；
 5. opencv 3.4.15，使用了[opencv-mobile](https://github.com/nihui/opencv-mobile)的代码，编译脚本在script文件夹里；
-6. onnxruntime动态库 1.12.1
 
 ## 更新说明
-#### 2021-09-30 update 1.1.0
+#### 2021-09-30 update v1.1.0
 
 * opencv 3.4.15(特别说明：4.5.3也可以支持，如果换成cv4，minSdkVersion必须改为24)
 * det模型更换为效果更好的ch_PP-OCRv2_det_infer
@@ -70,69 +66,31 @@ onnxruntime框架[https://github.com/microsoft/onnxruntime](https://github.com/m
 * 升级各dependencies
 * 使用kotlin coroutines代替rxjava
 
-#### 2021-10-28 update 1.1.1
+#### 2021-10-28 update v1.1.1
 
 * 编辑build.gradle，把版本定义放到root build.gradle
 * 编辑github workflow config，上传aar文件到release
 
-#### 2022-03-03 update 1.1.2
+#### 2022-03-03 update v1.1.2
 
 * 升级gradle
 * 升级各依赖库
 
-## 编译说明
+#### 2022-10-21 update v1.2.0
 
-1. AndroidStudio 2021.2.1或以上；
-2. NDK下载，在SDK Tools中下载，版本选最新版；
-3. cmake 3.4.1或以上，最好是3.18.1，在SDK Tools中下载；
-4. 整合好的范例工程自带了模型，在models文件夹中
-5. 下载opencv-mobile-3.4.15-android.7z，[下载地址](https://gitee.com/benjaminwan/ocr-lite-android-ncnn/attach_files/843219/download/opencv-mobile-3.4.15-android.7z)
-解压后目录结构为
+* onnxruntime 1.12.1
+* 升级各依赖库
 
-```
-RapidOcrAndroidOnnx/OcrLibrary/src/sdk
-    └── native
-        ├── jni
-        └── staticlibs
-```
+#### 2023-02-16 update v1.3.0
 
-6. 下载onnxruntime-1.6.0-android.7z，[下载地址](https://gitee.com/benjaminwan/ocr-lite-android-onnx/releases/v1.0.0.20201022)
+* onnxruntime 1.14.0
+* 升级各依赖库
+* 相册识别和相机识别增加停止按钮
+* 添加java demo
 
-* 解压后目录结构为
-```
-RapidOcrAndroidOnnx/OcrLibrary/src/main/onnx
-├── ONNXConfig.cmake
-├── arm64-v8a
-│   └── libonnxruntime.so
-├── armeabi-v7a
-│   └── libonnxruntime.so
-├── include
-├── x86
-│   └── libonnxruntime.so
-└── x86_64
-    └── libonnxruntime.so
-```
+### [编译说明](./BUILD.md)
 
-7. 编译好的安装大约3xMB
-
-
-### 编译Release包
-
-* mac/linux使用命令编译```./gradlew assembleRelease```
-* win使用命令编译```gradlew.bat assembleRelease```
-* 输出apk文件在app/build/outputs/apk
-
-### 重新编译
-
-删除项目根目录下的如下缓存文件夹
-
-```
-.idea
-build
-app/build
-OcrLibrary/.cxx
-OcrLibrary/build
-```
+### [使用说明](./INSTRUCTIONS.md)
 
 ## 项目结构
 
